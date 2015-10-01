@@ -18,21 +18,20 @@ public class RailControlSystem {
 	private RailControlSystem() {
 		this.rcsf = new RailControlSystemFrame();
 	}
-	
+
 	public Queue<Train> getLeftToRightWaitingQueue() {
 		return this.leftToRightWaitingQueue;
 	}
-	
-	
+
 	public Queue<Train> getRightToLeftWaitingQueue() {
 		return this.rightToLeftWaitingQueue;
 	}
-	
+
 	public Queue<Train> getBridgeQueue() {
 		return this.bridgeQueue;
 	}
-	
-	
+
+
 	public void addTrain(Train t) {
 		if (t.getDirection().equals(Direction.LEFT_TO_RIGHT)) {
 			this.leftToRightWaitingQueue.add(t);
