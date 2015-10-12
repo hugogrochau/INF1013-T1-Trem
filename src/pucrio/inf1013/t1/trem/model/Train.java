@@ -1,19 +1,22 @@
 package pucrio.inf1013.t1.trem.model;
 
 import java.awt.Color;
+import java.awt.Point;
 
 public class Train {
 	
 	private Direction direction;
 	private int speed;
+	private Point position;
 	
-	public Train(Direction d) {
-		this(d, 50);
+	public Train(Direction d, Point pos) {
+		this(d, 50, pos);
 	}
 	
-	public Train(Direction d, int speed) {
+	public Train(Direction d, int speed, Point pos) {
 		this.direction = d;
 		this.speed = speed;
+		this.position = (Point) pos.clone();
 	}
 	
 	public int getSpeed() {
@@ -22,6 +25,18 @@ public class Train {
 	
 	public Direction getDirection() {
 		return this.direction;
+	}
+	
+	public Point getPosition() {
+		return this.position;
+	}
+	
+	public void setPosition(Point pos) {
+		this.position = (Point) pos.clone();
+	}
+	
+	public void translatePosition(int x, int y) {
+		this.position.translate(x, y);
 	}
 	
 	public Color getColor() {
@@ -37,7 +52,7 @@ public class Train {
 	
 	@Override
 	public String toString() {
-		return String.format("Speed %d, Direction %s", this.getSpeed(), this.direction.toString());
+		return String.format("Speed %d, Direction %s, Position (%d,%d)", this.getSpeed(), this.direction.toString(), this.position.x, this.position.y);
 	}
 	
 	public enum Direction {
