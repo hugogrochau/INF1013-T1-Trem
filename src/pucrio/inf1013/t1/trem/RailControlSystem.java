@@ -36,7 +36,7 @@ public class RailControlSystem {
 	private Queue<Train> rightToLeftWaitingQueue = new LinkedList<Train>();
 	private Queue<Train> bridgeQueue = new LinkedList<Train>();
 	private Timer timer;
-
+	
 	private RailControlSystem() {
 		this.rcsf = new RailControlSystemFrame();
 		this.timer = new Timer(1000, new ActionListener() {
@@ -60,6 +60,9 @@ public class RailControlSystem {
 	}
 
 	public void addTrain(Train t) {
+		if (!this.canMove(t, t.getDirection())) {
+			return;
+		}
 		if (t.getDirection().equals(Direction.LEFT_TO_RIGHT)) {
 			this.leftToRightWaitingQueue.add(t);
 		} else if (t.getDirection().equals(Direction.RIGHT_TO_LEFT)) {
@@ -85,6 +88,9 @@ public class RailControlSystem {
 	}
 
 	public void moveTrain(Train t, Direction d) {
+		if (!this.canMove(t, d)) {
+			return;
+		}
 		if (d.equals(Direction.LEFT_TO_RIGHT)) {
 			/* left angled track */
 			if (t.getPosition().x >= RailControlSystem.LEFT_ANGLED_TRACK_START
@@ -113,13 +119,33 @@ public class RailControlSystem {
 			}
 		}
 	}
+	
+	public boolean canMove(Train t, Direction d) {
+		boolean canMove = true;
+		Queue<Train> q = d.equals(Direction.LEFT_TO_RIGHT) ? this.leftToRightWaitingQueue : this.rightToLeftWaitingQueue;
+ 		for (Train qt : q) {
+			if (!t.equals(qt)) {
+				int maxDistance = Math.max(t.getMinimalDistance(), qt.getMinimalDistance());	
+				if (qt.getPosition().x <= t.getPosition().x && qt.getPosition().x >= t.getPosition().x - maxDistance && d.equals(Direction.RIGHT_TO_LEFT)) {
+					canMove = false;
+				}
+				if (qt.getPosition().x <= t.getPosition().x + maxDistance && qt.getPosition().x >= t.getPosition().x && d.equals(Direction.LEFT_TO_RIGHT)) {
+					canMove = false;
+				}
+			}
+		}
+		return canMove;
+	}
 
 	public void updateTrainPositions() {
 		for (Train t : this.leftToRightWaitingQueue) {
 			this.moveTrain(t, Direction.LEFT_TO_RIGHT);
+		
 		}
 		for (Train t : this.rightToLeftWaitingQueue) {
-			this.moveTrain(t, Direction.RIGHT_TO_LEFT);
+			if (t.getPosition().x >= RIGHT_ANGLED_TRACK_END + 10) {
+				this.moveTrain(t, Direction.RIGHT_TO_LEFT);
+			}
 		}
 	}
 

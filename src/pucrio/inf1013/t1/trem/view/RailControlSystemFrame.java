@@ -47,7 +47,7 @@ public class RailControlSystemFrame extends JFrame implements MouseListener {
 	public void render(Graphics g) {
 		RailControlSystem rcsi = RailControlSystem.getInstance();
 		this.leftStopLight.render((Graphics2D) g, true);
-		this.rightStopLight.render((Graphics2D) g, true);
+		this.rightStopLight.render((Graphics2D) g, false);
 		this.renderWaitingQueue(g, rcsi.getLeftToRightWaitingQueue(), Direction.LEFT_TO_RIGHT);
 		this.renderWaitingQueue(g, rcsi.getRightToLeftWaitingQueue(), Direction.RIGHT_TO_LEFT);
 	}

@@ -8,6 +8,7 @@ public class Train {
 	private Direction direction;
 	private int speed;
 	private Point position;
+	private int minimalDistance = 70;
 	
 	public Train(Direction d, Point pos) {
 		this(d, 50, pos);
@@ -50,11 +51,15 @@ public class Train {
 		}
 	}
 	
+	public int getMinimalDistance() {
+		return minimalDistance;
+	}
+	
 	@Override
 	public String toString() {
 		return String.format("Speed %d, Direction %s, Position (%d,%d)", this.getSpeed(), this.direction.toString(), this.position.x, this.position.y);
 	}
-	
+
 	public enum Direction {
 		LEFT_TO_RIGHT,
 		RIGHT_TO_LEFT;
