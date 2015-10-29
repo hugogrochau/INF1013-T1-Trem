@@ -27,8 +27,46 @@ public class Train extends Observable implements Runnable  {
 	}
 	
 	public int calculateY() {
+		/* starting tracks */
+		if (this.position >= RailControlSystem.LEFT_ENTRY_POSITION && this.position <= RailControlSystem.LEFT_ANGLED_TRACK_START) {
+			if (direction.equals(Direction.LEFT_TO_RIGHT)) {
+				return 335;
+			} else if (direction.equals(Direction.RIGHT_TO_LEFT)) {
+				return 463;
+			}
+		}
+		if (this.position <= RailControlSystem.RIGHT_ENTRY_POSITION && this.position >= RailControlSystem.RIGHT_ANGLED_TRACK_START) {
+			if (direction.equals(Direction.LEFT_TO_RIGHT)) {
+				return 463;
+			} else if (direction.equals(Direction.RIGHT_TO_LEFT)) {
+				return 335;
+			}	
+		}
+		
+		/* bridge */
 		if (this.position > 472 && this.position < 1153) {
 			return 380;
+		}
+	
+		/* angled tracks */
+		if (this.position >= RailControlSystem.LEFT_ANGLED_TRACK_START && this.position <= RailControlSystem.LEFT_ANGLED_TRACK_END) {
+			if (direction.equals(Direction.LEFT_TO_RIGHT)) {
+				int xDelta = this.position - RailControlSystem.LEFT_ANGLED_TRACK_START; 
+				return (int) (335 + xDelta * 0.15);
+			} else if (direction.equals(Direction.RIGHT_TO_LEFT)) {
+				int xDelta = RailControlSystem.LEFT_ANGLED_TRACK_END - this.position; 
+				return (int) (380 + xDelta * 0.35);
+			}
+		}
+		
+		if (this.position <= RailControlSystem.RIGHT_ANGLED_TRACK_START && this.position >= RailControlSystem.RIGHT_ANGLED_TRACK_END) {
+			if (direction.equals(Direction.LEFT_TO_RIGHT)) {
+				int xDelta = this.position - RailControlSystem.RIGHT_ANGLED_TRACK_END; 
+				return (int) (380 + xDelta * 0.35);
+			} else if (direction.equals(Direction.RIGHT_TO_LEFT)) {
+				int xDelta = RailControlSystem.RIGHT_ANGLED_TRACK_START - this.position; 
+				return (int) (335 + xDelta * 0.25);
+			}	
 		}
 		return 380;
 	}
