@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Point;
 
+import pucrio.inf1013.t1.trem.model.StopLightState;
+
 public class StopLight {
 	
 	private Point position;
@@ -14,8 +16,9 @@ public class StopLight {
 		this.position = pos;
 	}
 	
-	public void render(Graphics2D g2, boolean green) {
+	public void render(Graphics2D g2, StopLightState state) {
 		Color defaultColor = g2.getColor();
+		boolean green = state.equals(StopLightState.OPEN);
 		g2.setColor(Color.BLACK);
 		g2.fillRect(this.position.x - StopLight.WIDTH / 2, position.y - StopLight.HEIGHT / 2, 
 				StopLight.WIDTH, StopLight.HEIGHT);

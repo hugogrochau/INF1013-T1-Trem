@@ -9,7 +9,7 @@ import java.awt.Image;
 import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.util.Queue;
+import java.util.List;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -46,17 +46,16 @@ public class RailControlSystemFrame extends JFrame implements MouseListener {
 
 	public void render(Graphics g) {
 		RailControlSystem rcsi = RailControlSystem.getInstance();
-		this.leftStopLight.render((Graphics2D) g, true);
-		this.rightStopLight.render((Graphics2D) g, false);
-		this.renderWaitingQueue(g, rcsi.getLeftToRightWaitingQueue(), Direction.LEFT_TO_RIGHT);
-		this.renderWaitingQueue(g, rcsi.getRightToLeftWaitingQueue(), Direction.RIGHT_TO_LEFT);
+		this.leftStopLight.render((Graphics2D) g, rcsi.getLeftStopLightState());
+		this.rightStopLight.render((Graphics2D) g, rcsi.getRightStopLightState());
+		this.renderWaitingQueue(g, rcsi.getLeftToRightTrains(), Direction.LEFT_TO_RIGHT);
+		this.renderWaitingQueue(g, rcsi.getRightToLeftTrains(), Direction.RIGHT_TO_LEFT);
 	}
 
-	private void renderWaitingQueue(Graphics g, Queue<Train> q, Direction d) {
+	private void renderWaitingQueue(Graphics g, List<Train> q, Direction d) {
 		Graphics2D g2 = (Graphics2D) g;
 		for (Train t: q) {
-			System.out.println(t.toString());
-			RailControlSystemFrame.drawCircle(g2, t.getPosition().x, t.getPosition().y, RailControlSystem.TRAIN_CIRCLE_RADIUS, t.getColor());
+			RailControlSystemFrame.drawCircle(g2, t.getPosition(), t.calculateY(), RailControlSystem.TRAIN_CIRCLE_RADIUS, t.getColor());
 		}
 	}
 
@@ -93,9 +92,9 @@ public class RailControlSystemFrame extends JFrame implements MouseListener {
 	public void mouseClicked(MouseEvent me) {
 		System.out.printf("%d, %d\n", me.getX(), me.getY());
 		if (me.getButton() == MouseEvent.BUTTON1) {
-			RailControlSystem.getInstance().addTrain(new Train(Direction.RIGHT_TO_LEFT, RailControlSystem.RIGHT_ENTRY_COORDINATES));			
+			RailControlSystem.getInstance().addTrain(new Train(Direction.RIGHT_TO_LEFT, RailControlSystem.RIGHT_ENTRY_POSITION));			
 		} else if (me.getButton() == MouseEvent.BUTTON3) {
-			RailControlSystem.getInstance().addTrain(new Train(Direction.LEFT_TO_RIGHT, RailControlSystem.LEFT_ENTRY_COORDINATES));
+			RailControlSystem.getInstance().addTrain(new Train(Direction.LEFT_TO_RIGHT, RailControlSystem.LEFT_ENTRY_POSITION));
 		}
 	}
 
