@@ -1,45 +1,37 @@
-package pucrio.inf1013.t1.trem.model;
+package pucrio.inf1013.t1.trem.state;
 
-public class LeftOpen extends RailCrossingState {
+import pucrio.inf1013.t1.trem.RailControlSystem;
 
-	public LeftOpen() {
-		rcs.setLeftStopLightState(StopLightState.OPEN);
-		rcs.setRightStopLightState(StopLightState.CLOSED);
-	}
+public class BothOpen extends RailCrossingState {
+
+	private static RailControlSystem rcs = RailControlSystem.getInstance();
 	
+	public BothOpen() {
+		rcs.setLeftStopLightState(StopLightState.OPEN);
+		rcs.setRightStopLightState(StopLightState.OPEN);
+	}
+
 	@Override
 	public RailCrossingState trainTouchedLeftEntrySensor() {
 		rcs.addLeftWaitingTrain();
-		return this;		
+		return new LeftOpen();
 	}
 
 	@Override
 	public RailCrossingState trainTouchedLeftExitSensor() {
-		rcs.removeRightWaitingTrain();
 		return this;
 	}
 
 	@Override
 	public RailCrossingState trainTouchedRightEntrySensor() {
 		rcs.addRightWaitingTrain();
-		return this;
+		return new RightOpen();
 	}
 
 	@Override
 	public RailCrossingState trainTouchedRightExitSensor() {
-		rcs.removeLeftWaitingTrain();
-		
-		if (rcs.getLeftWaitingTrains() <= 0) {
-			if (rcs.getRightWaitingTrains() > 0) {
-				return new RightOpen();
-			} else {
-				return new BothOpen();
-			}
-		}
-		
 		return this;
 	}
-
 
 
 }

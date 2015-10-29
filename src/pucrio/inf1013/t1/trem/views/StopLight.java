@@ -1,10 +1,10 @@
-package pucrio.inf1013.t1.trem.view;
+package pucrio.inf1013.t1.trem.views;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Point;
 
-import pucrio.inf1013.t1.trem.model.StopLightState;
+import pucrio.inf1013.t1.trem.state.StopLightState;
 
 public class StopLight {
 	

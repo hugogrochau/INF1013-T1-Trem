@@ -1,9 +1,7 @@
-package pucrio.inf1013.t1.trem.model;
+package pucrio.inf1013.t1.trem;
 
 import java.awt.Color;
 import java.util.Observable;
-
-import pucrio.inf1013.t1.trem.RailControlSystem;
 
 public class Train extends Observable implements Runnable  {
 	

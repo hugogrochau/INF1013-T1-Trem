@@ -10,11 +10,10 @@ import java.util.Observer;
 
 import javax.swing.Timer;
 
-import pucrio.inf1013.t1.trem.model.RailCrossingState;
-import pucrio.inf1013.t1.trem.model.StopLightState;
-import pucrio.inf1013.t1.trem.model.Train;
-import pucrio.inf1013.t1.trem.model.Train.Direction;
-import pucrio.inf1013.t1.trem.view.RailControlSystemFrame;
+import pucrio.inf1013.t1.trem.Train.Direction;
+import pucrio.inf1013.t1.trem.state.RailCrossingState;
+import pucrio.inf1013.t1.trem.state.StopLightState;
+import pucrio.inf1013.t1.trem.views.RailControlSystemFrame;
 
 public class RailControlSystem implements Observer {
 	

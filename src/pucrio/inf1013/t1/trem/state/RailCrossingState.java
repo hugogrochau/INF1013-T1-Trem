@@ -1,4 +1,4 @@
-package pucrio.inf1013.t1.trem.model;
+package pucrio.inf1013.t1.trem.state;
 
 import pucrio.inf1013.t1.trem.RailControlSystem;
 

@@ -1,7 +1,6 @@
 package pucrio.inf1013.t1.trem;
 
-import pucrio.inf1013.t1.trem.model.Train;
-import pucrio.inf1013.t1.trem.model.Train.Direction;
+import pucrio.inf1013.t1.trem.Train.Direction;
 
 public class Main {
 

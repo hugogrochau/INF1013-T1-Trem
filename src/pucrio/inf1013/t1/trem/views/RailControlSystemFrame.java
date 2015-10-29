@@ -1,4 +1,4 @@
-package pucrio.inf1013.t1.trem.view;
+package pucrio.inf1013.t1.trem.views;
 
 
 import java.awt.Color;
@@ -16,8 +16,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import pucrio.inf1013.t1.trem.RailControlSystem;
-import pucrio.inf1013.t1.trem.model.Train;
-import pucrio.inf1013.t1.trem.model.Train.Direction;
+import pucrio.inf1013.t1.trem.Train;
+import pucrio.inf1013.t1.trem.Train.Direction;
 
 @SuppressWarnings("serial")
 public class RailControlSystemFrame extends JFrame implements MouseListener {
