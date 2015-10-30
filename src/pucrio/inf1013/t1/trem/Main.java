@@ -1,6 +1,6 @@
 package pucrio.inf1013.t1.trem;
 
-import pucrio.inf1013.t1.trem.Train.Direction;
+import pucrio.inf1013.t1.trem.views.SpawnTrainFrame;
 
 public class Main {
 
@@ -8,5 +8,6 @@ public class Main {
 		System.out.println("PUC-RIO INF1013 T1 - Trem. By Hugo Grochau");
 		RailControlSystem rcs = RailControlSystem.getInstance();
 		rcs.start();
+		new SpawnTrainFrame();
 	}
 }

@@ -1,14 +1,11 @@
 package pucrio.inf1013.t1.trem.views;
 
-
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Point;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.util.List;
 
 import javax.swing.ImageIcon;
@@ -20,28 +17,26 @@ import pucrio.inf1013.t1.trem.Train;
 import pucrio.inf1013.t1.trem.Train.Direction;
 
 @SuppressWarnings("serial")
-public class RailControlSystemFrame extends JFrame implements MouseListener {
-	
-	public static final Point STOPLIGHT_LEFT_COORDINATES = new Point (200, 200);
-	public static final Point STOPLIGHT_RIGHT_COORDINATES = new Point (1300, 200);
+public class RailControlSystemFrame extends JFrame {
+
+	public static final Point STOPLIGHT_LEFT_COORDINATES = new Point(200, 200);
+	public static final Point STOPLIGHT_RIGHT_COORDINATES = new Point(1300, 200);
 	private StopLight leftStopLight;
 	private StopLight rightStopLight;
-	
-	
+
 	public RailControlSystemFrame() {
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		this.setTitle("Rail Control System - by Hugo Grochau");
 		this.setResizable(false);
 		Image backgroundImage = this.getImage("resources/Trem.jpg");
 		Dimension frameDimension = new Dimension(backgroundImage.getWidth(null), backgroundImage.getHeight(null));
-	    this.setBounds(0,0,frameDimension.width, frameDimension.height);
-	    this.setContentPane(new ImagePanel(backgroundImage));
-	    
+		this.setBounds(0, 0, frameDimension.width, frameDimension.height);
+		this.setContentPane(new ImagePanel(backgroundImage));
+
 		this.leftStopLight = new StopLight(RailControlSystemFrame.STOPLIGHT_LEFT_COORDINATES);
 		this.rightStopLight = new StopLight(RailControlSystemFrame.STOPLIGHT_RIGHT_COORDINATES);
-	    
-	    this.getContentPane().addMouseListener(this);
-	    this.setVisible(true);
+
+		this.setVisible(true);
 	}
 
 	public void render(Graphics g) {
@@ -54,14 +49,15 @@ public class RailControlSystemFrame extends JFrame implements MouseListener {
 
 	private void renderWaitingQueue(Graphics g, List<Train> q, Direction d) {
 		Graphics2D g2 = (Graphics2D) g;
-		for (Train t: q) {
-			RailControlSystemFrame.drawCircle(g2, t.getPosition(), t.calculateY(), RailControlSystem.TRAIN_CIRCLE_RADIUS, t.getColor());
+		for (Train t : q) {
+			RailControlSystemFrame.drawCircle(g2, t.getPosition(), t.calculateY(),
+					RailControlSystem.TRAIN_CIRCLE_RADIUS, t.getColor());
 		}
 	}
 
 	public static void drawCircle(Graphics2D g2, int x, int y, int radius, Color c) {
 		g2.setColor(c);
-		g2.fillOval(x, y, radius*2, radius*2);
+		g2.fillOval(x, y, radius * 2, radius * 2);
 	}
 
 	public Image getImage(String path) {
@@ -76,49 +72,18 @@ public class RailControlSystemFrame extends JFrame implements MouseListener {
 	}
 
 	class ImagePanel extends JPanel {
-	    private Image image;
-	    public ImagePanel(Image image) {
-	        this.image = image;
-	    }
-	    @Override
-	    protected void paintComponent(Graphics g) {
-	        super.paintComponent(g);
-	        g.drawImage(image, 0, 0, this);
-	        render(g);
-	    }
-	}
+		private Image image;
 
-	@Override
-	public void mouseClicked(MouseEvent me) {
-		System.out.printf("%d, %d\n", me.getX(), me.getY());
-		if (me.getButton() == MouseEvent.BUTTON1) {
-			RailControlSystem.getInstance().addTrain(new Train(Direction.RIGHT_TO_LEFT, RailControlSystem.RIGHT_ENTRY_POSITION));			
-		} else if (me.getButton() == MouseEvent.BUTTON3) {
-			RailControlSystem.getInstance().addTrain(new Train(Direction.LEFT_TO_RIGHT, RailControlSystem.LEFT_ENTRY_POSITION));
+		public ImagePanel(Image image) {
+			this.image = image;
 		}
-	}
 
-	@Override
-	public void mouseEntered(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-	}
-
-	@Override
-	public void mouseExited(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void mousePressed(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void mouseReleased(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-
+		@Override
+		protected void paintComponent(Graphics g) {
+			super.paintComponent(g);
+			g.drawImage(image, 0, 0, this);
+			render(g);
+		}
 	}
 
 }

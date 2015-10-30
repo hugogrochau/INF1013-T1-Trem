@@ -6,11 +6,11 @@ public class LeftOpen extends RailCrossingState {
 		rcs.setLeftStopLightState(StopLightState.OPEN);
 		rcs.setRightStopLightState(StopLightState.CLOSED);
 	}
-	
+
 	@Override
 	public RailCrossingState trainTouchedLeftEntrySensor() {
 		rcs.addLeftWaitingTrain();
-		return this;		
+		return this;
 	}
 
 	@Override
@@ -28,7 +28,7 @@ public class LeftOpen extends RailCrossingState {
 	@Override
 	public RailCrossingState trainTouchedRightExitSensor() {
 		rcs.removeLeftWaitingTrain();
-		
+
 		if (rcs.getLeftWaitingTrains() <= 0) {
 			if (rcs.getRightWaitingTrains() > 0) {
 				return new RightOpen();
@@ -36,10 +36,8 @@ public class LeftOpen extends RailCrossingState {
 				return new BothOpen();
 			}
 		}
-		
+
 		return this;
 	}
-
-
 
 }

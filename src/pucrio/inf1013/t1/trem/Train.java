@@ -8,18 +8,15 @@ public class Train extends Observable implements Runnable  {
 	private Direction direction;
 	private int speed;
 	private int position;
-	private int minimalDistance = 70;
+	private int minimalDistance;
 	private boolean running = true;
 	private boolean exitedTunnel = false;
 	
-	public Train(Direction d, int pos) {
-		this(d, 50, pos);
-	}
-	
-	public Train(Direction d, int speed, int pos) {
+	public Train(Direction d, int speed, int minDist) {
 		this.direction = d;
 		this.speed = speed;
-		this.position = pos;
+		this.position = d.equals(Direction.LEFT_TO_RIGHT) ? RailControlSystem.LEFT_ENTRY_POSITION : RailControlSystem.RIGHT_ENTRY_POSITION;
+		this.minimalDistance = minDist;
 	}
 	
 	public int getSpeed() {

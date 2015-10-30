@@ -16,7 +16,7 @@ import pucrio.inf1013.t1.trem.state.StopLightState;
 import pucrio.inf1013.t1.trem.views.RailControlSystemFrame;
 
 public class RailControlSystem implements Observer {
-	
+
 	public final static Point LEFT_EXIT_COORDINATES = new Point(0, 335);
 	public final static Point LEFT_ENTRY_COORDINATES = new Point(0, 460);
 	public final static Point RIGHT_EXIT_COORDINATES = new Point(1544, 339);
@@ -32,20 +32,20 @@ public class RailControlSystem implements Observer {
 	public final static int RIGHT_ANGLED_TRACK_END = 1152;
 	public final static int TRAIN_CIRCLE_RADIUS = 16;
 	public final static int TRAIN_DISTANCE = 32;
-	
+
 	private int leftWaitingTrains = 0;
 	private int rightWaitingTrains = 0;
 
 	private static RailControlSystem instance;
 	private RailControlSystemFrame rcsf;
 	private RailCrossingState railCrossingState;
-	
+
 	private StopLightState leftStopLightState = StopLightState.OPEN;
 	private StopLightState rightStopLightState = StopLightState.OPEN;
-	
+
 	private List<Train> leftToRightTrains = new LinkedList<Train>();
 	private List<Train> rightToLeftTrains = new LinkedList<Train>();
-	
+
 	private Timer timer;
 
 	private RailControlSystem() {
@@ -101,7 +101,9 @@ public class RailControlSystem implements Observer {
 					canMove = false;
 				}
 			}
-			if (this.getLeftStopLightState().equals(StopLightState.CLOSED) && t.getPosition() >= RailControlSystem.LEFT_ANGLED_TRACK_START && t.getPosition() <= RailControlSystem.RIGHT_ANGLED_TRACK_END) {
+			if (this.getLeftStopLightState().equals(StopLightState.CLOSED)
+					&& t.getPosition() >= RailControlSystem.LEFT_ANGLED_TRACK_START
+					&& t.getPosition() <= RailControlSystem.RIGHT_ANGLED_TRACK_END) {
 				canMove = false;
 			}
 		} else if (d.equals(Direction.RIGHT_TO_LEFT)) {
@@ -112,7 +114,9 @@ public class RailControlSystem implements Observer {
 					canMove = false;
 				}
 			}
-			if (this.getRightStopLightState().equals(StopLightState.CLOSED) && t.getPosition() <= RailControlSystem.RIGHT_ANGLED_TRACK_START && t.getPosition() >= RailControlSystem.LEFT_ANGLED_TRACK_END) {
+			if (this.getRightStopLightState().equals(StopLightState.CLOSED)
+					&& t.getPosition() <= RailControlSystem.RIGHT_ANGLED_TRACK_START
+					&& t.getPosition() >= RailControlSystem.LEFT_ANGLED_TRACK_END) {
 				canMove = false;
 			}
 		}
@@ -154,7 +158,7 @@ public class RailControlSystem implements Observer {
 		} else if (train.getDirection().equals(Direction.RIGHT_TO_LEFT)) {
 			this.rightToLeftTrains.remove(train);
 		}
-		
+
 	}
 
 	@Override
@@ -174,7 +178,7 @@ public class RailControlSystem implements Observer {
 	public void addLeftWaitingTrain() {
 		this.leftWaitingTrains++;
 	}
-	
+
 	public void removeLeftWaitingTrain() {
 		this.leftWaitingTrains--;
 	}
@@ -186,7 +190,7 @@ public class RailControlSystem implements Observer {
 	public void addRightWaitingTrain() {
 		this.rightWaitingTrains++;
 	}
-	
+
 	public void removeRightWaitingTrain() {
 		this.rightWaitingTrains--;
 	}
