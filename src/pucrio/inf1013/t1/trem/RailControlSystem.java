@@ -1,6 +1,5 @@
 package pucrio.inf1013.t1.trem;
 
-import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.LinkedList;
@@ -16,13 +15,6 @@ import pucrio.inf1013.t1.trem.state.StopLightState;
 import pucrio.inf1013.t1.trem.views.RailControlSystemFrame;
 
 public class RailControlSystem implements Observer {
-
-	public final static Point LEFT_EXIT_COORDINATES = new Point(0, 335);
-	public final static Point LEFT_ENTRY_COORDINATES = new Point(0, 460);
-	public final static Point RIGHT_EXIT_COORDINATES = new Point(1544, 339);
-	public final static Point RIGHT_ENTRY_COORDINATES = new Point(1540, 460);
-	public final static Point BRIDGE_LEFT_COORDINATES = new Point(471, 385);
-	public final static Point BRIDGE_RIGHT_COORDINATES = new Point(1123, 385);
 
 	public final static int LEFT_ENTRY_POSITION = 0;
 	public final static int RIGHT_ENTRY_POSITION = 1544;
