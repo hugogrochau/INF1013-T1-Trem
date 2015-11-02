@@ -85,42 +85,38 @@ public class RailControlSystem implements Observer {
 		return RailControlSystem.instance;
 	}
 
-	public void moveTrain(Train t, Direction d) {
-		if (this.canMove(t, d)) {
-			t.tick();
-		}
-	}
-
-	public boolean canMove(Train t, Direction d) {
-		boolean canMove = true;
+	public boolean canMove(Train t) {
+		Direction d = t.getDirection();
 		if (d.equals(Direction.LEFT_TO_RIGHT)) {
-			for (Train otherTrain : this.leftToRightTrains) {
-				int maxDistance = Math.max(t.getMinimalDistance(), otherTrain.getMinimalDistance());
-				if (!otherTrain.equals(t) && otherTrain.getPosition() <= t.getPosition() + maxDistance
-						&& otherTrain.getPosition() >= t.getPosition()) {
-					canMove = false;
-				}
-			}
 			if (this.getLeftStopLightState().equals(StopLightState.CLOSED)
 					&& t.getPosition() >= RailControlSystem.LEFT_ANGLED_TRACK_START
 					&& t.getPosition() <= RailControlSystem.RIGHT_ANGLED_TRACK_END) {
-				canMove = false;
+				return false;
 			}
-		} else if (d.equals(Direction.RIGHT_TO_LEFT)) {
-			for (Train otherTrain : this.rightToLeftTrains) {
+			for (Train otherTrain : this.leftToRightTrains) {
 				int maxDistance = Math.max(t.getMinimalDistance(), otherTrain.getMinimalDistance());
-				if (!otherTrain.equals(t) && otherTrain.getPosition() >= t.getPosition() - maxDistance
-						&& otherTrain.getPosition() <= t.getPosition()) {
-					canMove = false;
+				if (!otherTrain.equals(t) && otherTrain.getPosition() > t.getPosition()
+						&& t.getPosition() + t.getSpeed() >= otherTrain.getPosition() - maxDistance) {
+					return false;
 				}
 			}
+
+		} else if (d.equals(Direction.RIGHT_TO_LEFT)) {
 			if (this.getRightStopLightState().equals(StopLightState.CLOSED)
 					&& t.getPosition() <= RailControlSystem.RIGHT_ANGLED_TRACK_START
 					&& t.getPosition() >= RailControlSystem.LEFT_ANGLED_TRACK_END) {
-				canMove = false;
+				return false;
 			}
+			for (Train otherTrain : this.rightToLeftTrains) {
+				int maxDistance = Math.max(t.getMinimalDistance(), otherTrain.getMinimalDistance());
+				if (!otherTrain.equals(t) && otherTrain.getPosition() <= t.getPosition()
+						&& t.getPosition() - t.getSpeed() <= otherTrain.getPosition() + maxDistance) {
+					return false;
+				}
+			}
+
 		}
-		return canMove;
+		return true;
 	}
 
 	public void tick() {

@@ -139,7 +139,7 @@ public class Train extends Observable implements Runnable  {
 	@Override
 	public void run() {
 		while (this.running) {
-			if (RailControlSystem.getInstance().canMove(this, this.direction)) {
+			if (RailControlSystem.getInstance().canMove(this)) {
 				this.tick();
 			}
 			try {
